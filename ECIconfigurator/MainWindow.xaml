@@ -1,0 +1,152 @@
+﻿<Window x:Class="ECIconfigurator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ECIconfigurator"
+        mc:Ignorable="d"
+        Closing="MainWindow_Closing"
+        Title="ECI configurator v1.0" Icon="/Device.contrast-black.ico" HorizontalAlignment="Left" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" Grid.Row="0" Height="20" Margin="10,0,10,0">
+            <Menu>
+                <MenuItem x:Name="configurationMenu" Header="Конфигурация" Height="20">
+                    <MenuItem x:Name="configurationMenuOpen" Header="Открыть.." Click="ConfigurationLoad_Click"/>
+                    <MenuItem x:Name="configurationMenuSave" Header="Сохранить.." Click="ConfigurationSave_Click"/>
+                    <MenuItem x:Name="configurationMenuExit" Header="Выход" Click="Exit_Click"/>
+                </MenuItem>
+
+                <MenuItem x:Name="comportMenu" Header="COM порт" Height="20">
+                    <MenuItem x:Name="comportMenuReadWhenOpen" Header="Чтение при открытии" Click="setReadWhenOpen_Click" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem x:Name="comportMenuReadOnline" Header="Чтение онлайн" IsCheckable="True"  IsEnabled="False"/>
+                    <MenuItem x:Name="comportMenuWriteOnline" Header="Запись онлайн" Click="setWriteOnline_Click" IsCheckable="True" IsChecked="True"/>
+                </MenuItem>
+
+                <MenuItem x:Name="languageMenu" Header="Язык" Height="20">
+                    <MenuItem x:Name="languageMenuRu" Header="Русский" Click="LanguageRu_Click" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem x:Name="languageMenuEng" Header="Английский" Click="LanguageEng_Click" IsCheckable="True"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <DockPanel Grid.Column="0" Grid.Row="1" Height="45" Margin="10,0,10,0">
+            <Button x:Name="scanButton" Content="Сканировать" Click="ScanComport_Click"  Margin="0,10,0,0" Width="90" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <ComboBox x:Name="comportBox" Width="90" Margin="10,10,0,0" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <Button x:Name="openButton" Content="Открыть" Click ="OpenComport_Click" Margin="10,10,0,0" Width="90" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="closeButton" Content="Закрыть" Click ="CloseComport_Click" Margin="10,10,0,0" Width="90" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="readButton" Content="Прочитать" Margin="10,10,0,0" Width="90" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" Click="ReadComport_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="writeButton" Content="Записать" Margin="10,10,0,0" Width="90" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" Click="WriteComport_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </DockPanel>
+        
+        <TabControl Grid.Column="0" Grid.Row="2" x:Name="tabControl" Height="370" Margin="10,0,10,0">
+            <TabItem x:Name="deviceTab" Header="Device">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="deviceTable" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="options1Tab" Header="Options1">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="options1Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="options2Tab" Header="Options2">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="options2Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="text1Tab" Header="Text1">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="text1Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="text2Tab" Header="Text2">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="text2Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="text3Tab" Header="Text3">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="text3Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="text4Tab" Header="Text4">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="text4Table" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="qrcodeTab" Header="Qr-code">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="qrcodeTable" Margin="3,3,3,3"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+        <DockPanel Grid.Column="0" Grid.Row="3" Height="45" Margin="10,0,10,0">
+
+            <Button x:Name="openFirmwareButton" Content="Обновить ПО" Margin="0,10,0,0" Width="90" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Click="LanguageRu_Click" IsEnabled="False">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </DockPanel>
+
+        <StatusBar x:Name="statusBar" Grid.Column="0" Grid.Row="4" Margin="10,0,10,0" VerticalAlignment="Bottom">
+            <TextBlock x:Name="statusMessage" Height="20"/>
+        </StatusBar>   
+        
+    </Grid>
+</Window>
